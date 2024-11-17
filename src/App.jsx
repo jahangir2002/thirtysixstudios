@@ -1,14 +1,17 @@
-import "./index.css"
-import Canvas from "./canvas"
+import "./index.css";
+import Canvas from "./canvas";
+import data from "./data";
 
 function App() {
-  return <>
-  <div className="w-full h-screen bg-black text-white">
-    <Canvas startIndex={0}/>
-    <Canvas startIndex={150}/>
-    <Canvas startIndex={300}/>
+  return (<>
+    <div className="relative w-full h-screen">
+
+    {data[0].map((canvasdets, canvasIndex) => (
+      <Canvas key={canvasIndex} details={canvasdets} />
+    ))}
   </div>
   </>
+  );
 }
 
 export default App

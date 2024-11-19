@@ -10,6 +10,7 @@ function App() {
   const [showCanvas, setShowCanvas] = useState(false);
   const headingRef = useRef(null);
   const growingspan = useRef(null);
+  const footerRef = useRef(null);
 
   useEffect(() => {
     const locomotiveScroll = new LocomotiveScroll();
@@ -32,6 +33,12 @@ function App() {
             ease: "power2.inOut",
           });
 
+          gsap.to(footerRef.current, {
+            backgroundColor: "#fd2c2a",
+            duration: 1.2,
+            ease: "power2.inOut"
+          });
+
           gsap.to(growingspan.current, {
             scale: 1000,
             duration: 2,
@@ -50,6 +57,12 @@ function App() {
             duration: 1.2,
             ease: "power2.inOut",
           });
+
+          gsap.to(footerRef.current, {
+            backgroundColor: "#000",
+            duration: 1.2,
+            ease: "power2.inOut"
+          });
         }
 
         return !prevShowCanvas;
@@ -66,8 +79,10 @@ function App() {
   return (<>
   <span ref={growingspan} className="growing fixed top-[-20px] left-[-20px] w-5 h-5 pointer-events-none rounded-full"></span>
     <div className="relative w-full h-screen">
-      {showCanvas && data[0].map((canvasdets, canvasIndex) => (
-        <Canvas key={canvasIndex} details={canvasdets} />
+      {data[0].map((canvasdets, canvasIndex) => (
+        <div key={canvasIndex} className={`${showCanvas ? 'opacity-100' : 'opacity-0'} transition-opacity duration-1000`}>
+          <Canvas details={canvasdets} />
+        </div>
       ))}
       <div className="w-full h-screen relative z-[1] ">
         <nav className=" w-full flex justify-between items-center px-10 py-6 z-50">
@@ -95,15 +110,17 @@ function App() {
         </div>
 
         <div className="w-full text-center mt-40">
-          <h1 ref={headingRef} className=" text-[12rem] font-normal leading-[none] ">Thirtysixstudio</h1>
+          <h1 ref={headingRef} className="text-[12rem] font-normal leading-[none] cursor-pointer    transition-all">Thirtysixstudio</h1>
         </div>
       </div>
     </div>
 
     <div className="w-full relative  mt-[40vh]">
-        {data[1].map((canvasdets, index) => (
-          <Canvas key={index} details={canvasdets} />
-        ))}
+    {data[1].map((canvasdets, canvasIndex) => (
+        <div key={canvasIndex} className={`${showCanvas ? 'opacity-100' : 'opacity-0'} transition-opacity duration-1000`}>
+          <Canvas details={canvasdets} />
+        </div>
+      ))}
         <div className="relative z-[1] px-10 py-20">
           <h1 className="text-4xl tracking-tighter">about the brand</h1>
           <p className="text-xl leading-[1.3] w-[80%] mt-10 font-light">
@@ -117,8 +134,10 @@ function App() {
     </div>
 
     <div className="w-full relative  ">
-      {data[2].map((canvasdets, index) => (
-        <Canvas key={index} details={canvasdets} />
+    {data[2].map((canvasdets, canvasIndex) => (
+        <div key={canvasIndex} className={`${showCanvas ? 'opacity-100' : 'opacity-0'} transition-opacity duration-1000`}>
+          <Canvas details={canvasdets} />
+        </div>
       ))}
       <div className="relative z-[1] px-10 py-20">
         <h1 className="text-4xl tracking-tighter">our work</h1>
@@ -144,8 +163,10 @@ function App() {
     </div>
 
     <div className="w-full relative  ">
-      {data[3].map((canvasdets, index) => (
-        <Canvas key={index} details={canvasdets} />
+    {data[3].map((canvasdets, canvasIndex) => (
+        <div key={canvasIndex} className={`${showCanvas ? 'opacity-100' : 'opacity-0'} transition-opacity duration-1000`}>
+          <Canvas details={canvasdets} />
+        </div>
       ))}
       <div className="relative z-[1] px-10 py-20">
         <h1 className="text-4xl tracking-tighter">contact us</h1>
@@ -170,7 +191,7 @@ function App() {
       </div>
     </div>
 
-    <div className="w-full bg-black  py-12 px-16">
+    <div ref={footerRef} className="w-full bg-black py-12 px-16">
       <div className="flex justify-between items-start max-w-7xl mx-auto">
         <div className="max-w-xs">
           <h4 className="text-3xl font-medium mb-4">Thirty Six Studio</h4>

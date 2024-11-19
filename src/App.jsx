@@ -2,28 +2,84 @@ import "./index.css";
 import Canvas from "./canvas";
 import data from "./data";
 import LocomotiveScroll from 'locomotive-scroll';
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 function App() {
+  const [showCanvas, setShowCanvas] = useState(false);
+  const headingRef = useRef(null);
+  const growingspan = useRef(null);
+
   useEffect(() => {
     const locomotiveScroll = new LocomotiveScroll();
+  
   }, []);
+
+  useEffect(() => {
+    const handleClick = (e) => {
+      setShowCanvas((prevShowCanvas) => {
+        if (!prevShowCanvas) {
+          gsap.set(growingspan.current, {
+            top: e.clientY,
+            left: e.clientX,
+          });
+
+          gsap.to("body", {
+            color: "#000", 
+            backgroundColor: "#fd2c2a",
+            duration: 1.2,
+            ease: "power2.inOut",
+          });
+
+          gsap.to(growingspan.current, {
+            scale: 1000,
+            duration: 2,
+            ease: "power2.inOut",
+            onComplete: () => {
+              gsap.set(growingspan.current, {
+                scale: 0,
+                clearProps: "all",
+              });
+            },
+          });
+        } else {
+          gsap.to("body", {
+            color: "#fff",
+            backgroundColor: "#000",
+            duration: 1.2,
+            ease: "power2.inOut",
+          });
+        }
+
+        return !prevShowCanvas;
+      });
+    };
+
+    const headingElement = headingRef.current;
+    headingElement.addEventListener("click", handleClick);
+
+    // Clean up event listener on unmount
+    return () => headingElement.removeEventListener("click", handleClick);
+  }, []);
+
   return (<>
+  <span ref={growingspan} className="growing fixed top-[-20px] left-[-20px] w-5 h-5 pointer-events-none rounded-full"></span>
     <div className="relative w-full h-screen">
-      {data[0].map((canvasdets, canvasIndex) => (
+      {showCanvas && data[0].map((canvasdets, canvasIndex) => (
         <Canvas key={canvasIndex} details={canvasdets} />
       ))}
-      <div className="w-full h-screen relative z-[1] text-white">
+      <div className="w-full h-screen relative z-[1] ">
         <nav className=" w-full flex justify-between items-center px-10 py-6 z-50">
           <div className="logo">
-            <h2 className="text-white text-2xl font-bold">Thirtysixstudio</h2>
+            <h2 className=" text-2xl font-bold">Thirtysixstudio</h2>
           </div>
           <div className="links">
             {["Home", "About", "Work", "Contact"].map((link, index) => (
               <a
                 key={index}
                 href={`#${link.toLowerCase()}`}
-                className="text-white mx-4 hover:text-gray-400 transition-colors"
+                className=" mx-4 hover:text-gray-400 transition-colors"
               >
                 {link}
               </a>
@@ -39,12 +95,12 @@ function App() {
         </div>
 
         <div className="w-full text-center mt-40">
-          <h1 className="text-white text-[12rem] font-normal leading-[none] ">Thirtysixstudio</h1>
+          <h1 ref={headingRef} className=" text-[12rem] font-normal leading-[none] ">Thirtysixstudio</h1>
         </div>
       </div>
     </div>
 
-    <div className="w-full relative text-white mt-[60vh]">
+    <div className="w-full relative  mt-[40vh]">
         {data[1].map((canvasdets, index) => (
           <Canvas key={index} details={canvasdets} />
         ))}
@@ -60,7 +116,7 @@ function App() {
         </div>
     </div>
 
-    <div className="w-full relative text-white ">
+    <div className="w-full relative  ">
       {data[2].map((canvasdets, index) => (
         <Canvas key={index} details={canvasdets} />
       ))}
@@ -87,7 +143,7 @@ function App() {
       </div>
     </div>
 
-    <div className="w-full relative text-white ">
+    <div className="w-full relative  ">
       {data[3].map((canvasdets, index) => (
         <Canvas key={index} details={canvasdets} />
       ))}
@@ -114,7 +170,7 @@ function App() {
       </div>
     </div>
 
-    <div className="w-full bg-black text-white py-12 px-16">
+    <div className="w-full bg-black  py-12 px-16">
       <div className="flex justify-between items-start max-w-7xl mx-auto">
         <div className="max-w-xs">
           <h4 className="text-3xl font-medium mb-4">Thirty Six Studio</h4>
@@ -125,20 +181,20 @@ function App() {
           <div>
             <h5 className="text-lg font-medium mb-4">Navigation</h5>
             <ul className="font-light text-gray-300">
-              <li className="mb-3 hover:text-white transition-colors"><a href="#home">Home</a></li>
-              <li className="mb-3 hover:text-white transition-colors"><a href="#work">Work</a></li>
-              <li className="mb-3 hover:text-white transition-colors"><a href="#about">About</a></li>
-              <li className="mb-3 hover:text-white transition-colors"><a href="#contact">Contact</a></li>
+              <li className="mb-3 hover: transition-colors"><a href="#home">Home</a></li>
+              <li className="mb-3 hover: transition-colors"><a href="#work">Work</a></li>
+              <li className="mb-3 hover: transition-colors"><a href="#about">About</a></li>
+              <li className="mb-3 hover: transition-colors"><a href="#contact">Contact</a></li>
             </ul>
           </div>
           
           <div>
             <h5 className="text-lg font-medium mb-4">Social</h5>
             <ul className="font-light text-gray-300">
-              <li className="mb-3 hover:text-white transition-colors"><a href="#" target="_blank" rel="noopener noreferrer">Instagram</a></li>
-              <li className="mb-3 hover:text-white transition-colors"><a href="#" target="_blank" rel="noopener noreferrer">Twitter</a></li>
-              <li className="mb-3 hover:text-white transition-colors"><a href="#" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
-              <li className="mb-3 hover:text-white transition-colors"><a href="#" target="_blank" rel="noopener noreferrer">Behance</a></li>
+              <li className="mb-3 hover: transition-colors"><a href="#" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+              <li className="mb-3 hover: transition-colors"><a href="#" target="_blank" rel="noopener noreferrer">Twitter</a></li>
+              <li className="mb-3 hover: transition-colors"><a href="#" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+              <li className="mb-3 hover: transition-colors"><a href="#" target="_blank" rel="noopener noreferrer">Behance</a></li>
             </ul>
           </div>
         </div>
@@ -148,8 +204,8 @@ function App() {
         <div className="flex justify-between items-center">
           <p className="font-light text-sm text-gray-400">© {new Date().getFullYear()} Thirty Six Studio. All rights reserved.</p>
           <div className="flex gap-8 text-sm font-light text-gray-400">
-            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+            <a href="#" className="hover: transition-colors">Privacy Policy</a>
+            <a href="#" className="hover: transition-colors">Terms of Service</a>
           </div>
         </div>
       </div>

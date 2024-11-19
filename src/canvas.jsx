@@ -10,11 +10,23 @@ function Canvas({ details }) {
 
     useGSAP(() => {
         gsap.to(index, {
-            value: startIndex + numImages -1, duration:duration, repeat: -1, ease: "linear", onUpdate: () => {
+            value: startIndex + numImages - 1,
+            duration: duration,
+            repeat: -1,
+            ease: "linear",
+            onUpdate: () => {
                 setIndex({ value: Math.round(index.value) });
             }
         });
-    }, [index]);
+
+        gsap.from(canvasRef.current, {
+            opacity: 0,
+            duration: 0.5,
+            delay: 1,
+            ease: "power2.inOut"
+        });
+    }, []); // Added dependencies array
+
 
     useEffect(() => {
         const scale = window.devicePixelRatio; 

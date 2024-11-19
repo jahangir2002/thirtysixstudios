@@ -5,6 +5,14 @@ Welcome to the ThirtySix Studio Agency Portfolio! This website is a creative, vi
 
 
 
+## Screenshots
+
+![image 250 (1)](https://github.com/user-attachments/assets/d6d8b661-6ee5-4b57-aa97-43ee6a79983e)
+
+
+
+
+
 ## Table of Contents 
 
 - Table of Contents

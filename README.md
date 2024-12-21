@@ -3,6 +3,8 @@
 
 Welcome to the ThirtySix Studio Agency Portfolio! This website is a creative, visually-rich portfolio designed for showcasing your agency's services, projects, and branding. It leverages modern web technologies for a smooth user experience and smooth animations.
 
+<h2>Live Site : <a href="https://thirtysixstudio-copy.netlify.app/">thirtysixstudio-copy/</a> </h2>
+
 
 
 ## Screenshots
